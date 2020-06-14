@@ -209,7 +209,7 @@ UniqueCairoSurfacePtr DrawTexture(const std::vector<char>& intensity,
     // Make darker only the cells which are actually occupied,
     // and not grayish-looking cells
     const uint8_t alpha_value =
-        (intensity_value == 0 && alpha.at(i) > 0) : 255 ? alpha.at(i);
+        (intensity_value == 0 && alpha.at(i) > 0) ? 255 : alpha.at(i);
     const uint8_t observed =
         (intensity_value == 0 && alpha_value == 0) ? 0 : 255;
     cairo_data->push_back((alpha_value << 24) | (intensity_value << 16) |

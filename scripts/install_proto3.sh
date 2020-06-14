@@ -31,4 +31,7 @@ cmake -G Ninja \
   -Dprotobuf_BUILD_TESTS=OFF \
   ../cmake
 ninja
-sudo ninja install
+
+if [ "$1" != "--local" ]; then
+  sudo ninja install
+fi
