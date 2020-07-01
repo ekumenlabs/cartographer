@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Copyright 2016 The Cartographer Authors
+# Copyright 2019 The Cartographer Authors
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,21 +17,17 @@
 set -o errexit
 set -o verbose
 
-VERSION="v3.4.1"
-
-# Build and install proto3.
-git clone https://github.com/google/protobuf.git
-cd protobuf
-git checkout tags/${VERSION}
+git clone https://github.com/abseil/abseil-cpp.git
+cd abseil-cpp
+git checkout d902eb869bcfacc1bad14933ed9af4bed006d481
 mkdir build
 cd build
 cmake -G Ninja \
-  -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
   -DCMAKE_BUILD_TYPE=Release \
-  -Dprotobuf_BUILD_TESTS=OFF \
-  ../cmake
+  -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
+  -DCMAKE_INSTALL_PREFIX=/usr/local/stow/absl \
+  ..
 ninja
-
-if [ "$1" != "--local" ]; then
-  sudo ninja install
-fi
+sudo ninja install
+cd /usr/local/stow
+sudo stow absl
